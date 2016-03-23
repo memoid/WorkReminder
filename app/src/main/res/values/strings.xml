@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">WorkReminder</string>
+    <string name="daily_mail">Daily Mail</string>
+    <string name="weekly_mail">Weekly Mail</string>
+    <string name="today_activities">Today activities</string>
+    <string name="tomorrow_activities">Tomorrow activities</string>
+    <string name="confidence_level">Confidence</string>
+</resources>
