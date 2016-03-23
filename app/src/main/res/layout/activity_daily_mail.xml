@@ -30,6 +30,7 @@
         android:layout_height="wrap_content">
 
         <EditText
+            android:id="@+id/tomorrowText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/tomorrow_activities"
@@ -54,6 +55,7 @@
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.FloatingActionButton
+        android:layout_marginTop="20dp"
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
