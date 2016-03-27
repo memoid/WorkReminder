@@ -22,7 +22,7 @@ import javax.mail.internet.MimeMultipart;
 /**
  * Created by gmorod on 3/22/2016.
  */
-public class Mail extends Authenticator implements Runnable {
+public class Mail  implements Runnable {
 
     private String user;
     private String pass;
@@ -92,7 +92,12 @@ public class Mail extends Authenticator implements Runnable {
 
         if (!user.equals("") && !pass.equals("") && to.length > 0 && !from.equals("") && !subject.equals("") && !body.equals("")) {
 
-            Session session = Session.getInstance(props, this);
+            Session session = Session.getInstance(props, new Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(user, pass);
+                }
+            });
 
             MimeMessage msg = new MimeMessage(session);
             msg.setFrom(new InternetAddress(from));
@@ -141,15 +146,10 @@ public class Mail extends Authenticator implements Runnable {
         multipart.addBodyPart(messageBodyPart);
     }
 
-    @Override
-    protected PasswordAuthentication getPasswordAuthentication() {
-        return new PasswordAuthentication(user, pass);
-    }
-
     private Properties setProperties() {
 
         Properties props = new Properties();
-        props.put("mail.smtp.host", getHost());
+        props.put("mail.smtp.host", host);
 
         if (debbugable)
             props.put("mail.debug", true);
@@ -157,8 +157,8 @@ public class Mail extends Authenticator implements Runnable {
         if (auth)
             props.put("mail.smtp.auth", true);
 
-        props.put("mail.smtp.port", getPort());
-        props.put("mail.smtp.socketFactory.port", getSport());
+        props.put("mail.smtp.port", port);
+        props.put("mail.smtp.socketFactory.port", sport);
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.socketFactory.fallback", "false");
         props.put("mail.smtps.ssl.enable", "true");

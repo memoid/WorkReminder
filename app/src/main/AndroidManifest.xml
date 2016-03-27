@@ -18,7 +18,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DailyMailActivity"></activity>
+        <activity android:name=".DailyMailActivity" />
+
+        <service
+            android:name=".MailService"
+            />
     </application>
 
 </manifest>

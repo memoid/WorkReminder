@@ -1,11 +1,19 @@
 package com.memoid.workreminder;
 
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ShareActionProvider;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.memoid.workreminder.util.Mail;
 
@@ -13,8 +21,24 @@ public class DailyMailActivity extends AppCompatActivity {
 
     private String USER;
     private String PASSWORD;
+    private PendingIntent pendingIntent;
+
     FloatingActionButton fab;
     EditText todayText, tomorrowText, confidenceText;
+
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                int resultCode = bundle.getInt("result");
+                if (resultCode == RESULT_OK)
+                    Toast.makeText(context.getApplicationContext(), "Mail sent", Toast.LENGTH_LONG).show();
+                else
+                    Toast.makeText(context.getApplicationContext(), "Error on sending mail", Toast.LENGTH_LONG).show();
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +50,8 @@ public class DailyMailActivity extends AppCompatActivity {
         todayText = (EditText) findViewById(R.id.todayText);
         tomorrowText = (EditText) findViewById(R.id.tomorrowText);
         confidenceText = (EditText) findViewById(R.id.confidenceText);
+        Intent intent = new Intent(this, MailService.class);
+        pendingIntent = PendingIntent.getBroadcast(DailyMailActivity.this, 0, intent, 0);
     }
 
     public void sendMail(View view) {
@@ -45,8 +71,50 @@ public class DailyMailActivity extends AppCompatActivity {
         m.setSubject("Daily Report");
         m.setBody(body.toString());
 
-        Thread myThread = new Thread(m);
-        myThread.start();
+        Bundle bundle = new Bundle();
+        bundle.putString("body", body.toString());
+        bundle.putString("user", USER);
+        bundle.putString("password", PASSWORD);
+        bundle.putStringArray("tos", tos);
+        bundle.putString("from", USER);
+        bundle.putString("subject", "Daily Report");
 
+        Intent intent = new Intent(this, MailService.class);
+        intent.putExtras(bundle);
+        startService(intent);
+
+        /*final Message message = new Message();
+
+        final Handler handler = new Handler(new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message msg) {
+                if (msg.arg1 == 1) {
+                    Toast.makeText(getApplicationContext(), "Mail sent", Toast.LENGTH_LONG).show();
+                }
+                return false;
+            }
+        });
+
+        Thread myThread = new Thread(m) {
+            @Override
+            public void run() {
+                super.run();
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                message.arg1 = 1;
+                handler.sendMessage(message);
+            }
+        };
+        myThread.start();*/
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(receiver, new IntentFilter(MailService.NOTIFICATION));
     }
 }
