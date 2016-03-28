@@ -5,14 +5,16 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Icon;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.graphics.BitmapCompat;
 
 public class ScheduleMailService extends IntentService {
-    public static final String TAG = "Schedule Mail";
+
     public static final int NOTIFICATION_ID = 1;
 
     private NotificationManager notificationManager;
-    NotificationCompat.Builder builder;
 
     public ScheduleMailService() {
         super("ScheduleMailService");
@@ -20,10 +22,10 @@ public class ScheduleMailService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        sendNotificartion();
+        sendNotification();
     }
 
-    public void sendNotificartion() {
+    public void sendNotification() {
         notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, DailyMailActivity.class), 0);

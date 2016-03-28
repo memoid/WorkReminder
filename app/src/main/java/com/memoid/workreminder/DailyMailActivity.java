@@ -83,33 +83,6 @@ public class DailyMailActivity extends AppCompatActivity {
         intent.putExtras(bundle);
         startService(intent);
 
-        /*final Message message = new Message();
-
-        final Handler handler = new Handler(new Handler.Callback() {
-            @Override
-            public boolean handleMessage(Message msg) {
-                if (msg.arg1 == 1) {
-                    Toast.makeText(getApplicationContext(), "Mail sent", Toast.LENGTH_LONG).show();
-                }
-                return false;
-            }
-        });
-
-        Thread myThread = new Thread(m) {
-            @Override
-            public void run() {
-                super.run();
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                message.arg1 = 1;
-                handler.sendMessage(message);
-            }
-        };
-        myThread.start();*/
-
     }
 
     @Override
