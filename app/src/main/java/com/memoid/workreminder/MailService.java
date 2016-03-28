@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import java.util.Date;
 import java.util.Properties;
@@ -138,4 +139,9 @@ public class MailService extends IntentService {
 
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.v("OnDestroy:::", " is destroyed");
+    }
 }
