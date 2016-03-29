@@ -90,4 +90,10 @@ public class DailyMailActivity extends AppCompatActivity {
         super.onResume();
         registerReceiver(receiver, new IntentFilter(MailService.NOTIFICATION));
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
+    }
 }
