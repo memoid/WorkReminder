@@ -33,7 +33,8 @@ public class ScheduleMailService extends IntentService {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.mail)
                 .setContentTitle("Send daily mail")
-                .setContentText("Remember to send your daily mail");
+                .setContentText("Remember to send your daily mail")
+                .setAutoCancel(true);
 
         mBuilder.setContentIntent(contentIntent);
         notificationManager.notify(NOTIFICATION_ID, mBuilder.build());
