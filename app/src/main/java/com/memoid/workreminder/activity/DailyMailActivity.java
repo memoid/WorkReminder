@@ -1,21 +1,19 @@
-package com.memoid.workreminder;
+package com.memoid.workreminder.activity;
 
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Handler;
-import android.os.Message;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.ShareActionProvider;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.memoid.workreminder.util.Mail;
+import com.memoid.workreminder.R;
+import com.memoid.workreminder.service.MailService;
 
 public class DailyMailActivity extends AppCompatActivity {
 
@@ -56,23 +54,17 @@ public class DailyMailActivity extends AppCompatActivity {
 
     public void sendMail(View view) {
 
-        StringBuilder body = new StringBuilder();
-        body.append("Today: \n");
-        body.append(todayText.getText().toString() + "\n\n\n");
-        body.append("Tomorrow: \n");
-        body.append(tomorrowText.getText().toString() + "\n\n\n");
-        body.append("Confidence: \n");
-        body.append(confidenceText.getText().toString());
+        String body = "Today: \n" +
+                todayText.getText().toString() + "\n\n\n" +
+                "Tomorrow: \n" +
+                tomorrowText.getText().toString() + "\n\n\n" +
+                "Confidence: \n" +
+                confidenceText.getText().toString();
 
-        Mail m = new Mail(USER, PASSWORD);
         String[] tos = {USER};
-        m.setTo(tos);
-        m.setFrom(USER);
-        m.setSubject("Daily Report");
-        m.setBody(body.toString());
 
         Bundle bundle = new Bundle();
-        bundle.putString("body", body.toString());
+        bundle.putString("body", body);
         bundle.putString("user", USER);
         bundle.putString("password", PASSWORD);
         bundle.putStringArray("tos", tos);

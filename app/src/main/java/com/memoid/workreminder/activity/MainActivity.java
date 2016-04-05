@@ -1,9 +1,12 @@
-package com.memoid.workreminder;
+package com.memoid.workreminder.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
+import com.memoid.workreminder.receiver.MailReceiver;
+import com.memoid.workreminder.R;
 
 public class MainActivity extends AppCompatActivity {
 

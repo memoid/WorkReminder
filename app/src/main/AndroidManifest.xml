@@ -13,24 +13,24 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DailyMailActivity" />
+        <activity android:name=".activity.DailyMailActivity" />
 
-        <service android:name=".MailService" />
+        <service android:name=".service.MailService" />
 
         <receiver
-            android:name=".MailReceiver"
+            android:name=".receiver.MailReceiver"
             android:enabled="true"
             android:exported="true" />
 
         <service
-            android:name=".ScheduleMailService"
+            android:name=".service.ScheduleMailService"
             android:exported="false"></service>
     </application>
 

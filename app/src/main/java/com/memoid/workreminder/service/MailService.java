@@ -1,4 +1,4 @@
-package com.memoid.workreminder;
+package com.memoid.workreminder.service;
 
 import android.app.Activity;
 import android.app.IntentService;
